@@ -68,4 +68,38 @@ viewmodel scope cancels all its coroutines when the veiw Model is cleared.  | it
 * the parent coroutine waits for all child coroutine to complete before it finished.
 * if a child fails, the failure can propagate to parent optionally cancelling other childern.
 * if a child is destroyed, it also destroys the parent.
+
+  ----------------------------------------------------------------------------------------------------------------
+
+# Flows : 
+- kotlin flow is a key building block for handeling asyncronous data stream in a structured and safe way.
+- It is part of kotlin coroutines and is designed to model a sequence of values that computed asynchronously.(KMP ready)
+- Flow can be suspended between emissions making it idel for operations like fecthing data from the network, reading database or emitting values over time.
+
+## collect : 
+- procress every emmission from the flow.
+- each collector block completes before the next emmission is handelled.
+- useful when everyvalue matters, and noting should be skipped.
+
+## collectLatest :
+- always procress only latest emmission.
+- cancels the ongoing collector block if a new value is emmited.
+- useful when only the most recent value matters, like search suggestions and UI updates.
+
+## Imp points: 
+
+- The producer can emit values independently of the consumer's procressing speed.
+- The collector collects vaues whenever they arrive, potentially on a different thread, with potentially suspending the producer.
+- This allows efficient handling of events, such as network responses, user inputs or sensor data, when values arrive over time.
+
+## Cold Flows : 
+- A cold stream meaning that the flow's block doesn't execute until it is collected.
+- Each new collector triggers a fresh exection of the flow, it means every collect re-triggers the block.
+- This allows flows to reusable, lazy and memory efficient, as data is produced only when needed.
+- Garbage-Friendly, once a collector finishes, the emitted values can be garbage collected.
+
+## Hot flows : 
+- If you start listening late, you miss the songs that already played(unless the flow replayed them).
+- The Producer is active all the time, independent of collectors.
   
+
