@@ -102,4 +102,44 @@ viewmodel scope cancels all its coroutines when the veiw Model is cleared.  | it
 - If you start listening late, you miss the songs that already played(unless the flow replayed them).
 - The Producer is active all the time, independent of collectors.
   
+## Flow Builders : 
+- A flow builder is a  function that creates a flow,
+- By Default, the builder runs on the same coroutine context as the collector, unless you use flowOn.
 
+## Types of flow builders & when to use:
+- flow :
+  * when you need custom logic to generate values.
+  * when values require computation, suspension or looping.
+  * when you are bridging between suspending code and reactive streams.
+- flowOf :
+  * use when you already know the values in andvance.
+  * used for testing as well.
+- asFlow :
+  * it is an extension function
+  * use when any there is exesting sequence, or range can be turned into flow with asFlow().
+  * when u want to transform or process collections reactively.
+  * for converting existing data pipelines into flow without rewriting them.
+- channelFlow :
+  * This builder provides a coroutine-safe way to emit values from multiple coroutines.
+  * It uses channel underthe hood.
+  * Use it when you need to emit values concurrently from different coroutines.
+  * when combining multiple sources inside one flow 
+- callbackFlow :
+  * This builder adapts callback-based api's into flows.
+  * It is a powerful bridge when dealing with legacy or platform Api's.
+  * Use it when you are working with Anroid Listeners (e.g., location updates, sensor events)
+  * For Api's that push values via callbacks insted of returning them directly.
+
+## Structured Concurrency with Flow : 
+- Structured Concurrency ensures that coroutines are launched within a well-defined scope and are tied to that scope's life cycle.
+- When the parent completes or cancelled, all its children are cleaned up automatically.
+- since the flow is actually run inside a certain kotlin coroutine scope, it means that when sope is cancelled, the flow will be also canceled as well.
+
+## Flows Cancellation : 
+- If the collector is cancelled the upstream emission stops.
+- This Prevents wasted work (no unnecessary network requests, no extra cpu cycles).
+- It keeps resources safe - database queries, API calls or file I/O tied to the flow will be canceled as well.
+
+## LifeCycle of Flows : 
+- cold flow -> On demand computation (like youtube video starting when you press play).
+- Hot Flow -> Always Active Stream(like a FM Radio).
