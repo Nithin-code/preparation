@@ -143,3 +143,23 @@ viewmodel scope cancels all its coroutines when the veiw Model is cleared.  | it
 ## LifeCycle of Flows : 
 - cold flow -> On demand computation (like youtube video starting when you press play).
 - Hot Flow -> Always Active Stream(like a FM Radio).
+
+## Efficiency : 
+- A cold Flow is more performant when you have few collectors or need on-demand data.(since it runs only during collections).
+- A state Flow(Hot Flow) is more performant when you have many collectors, because it shares emissions and avoids re-running upstream logic for each one.
+
+## IMP point : 
+- A kotlin flow is completely lifecyle-agnostic, means it does not know anything about android activity, fragments or composables.
+- What determines how long it runs is the coroutuine scope in which its being collected.
+
+## Flow Operators :
+1. ## Terminal Flow Operators :
+   - In kotlin Flow, a terminal operator is an operation that triggers the execution of the flow.
+   - Until you call a Terminal Operator, a Flow is cold - it doesn't emit or do anything.
+   - Terminal operators practically complete the flow and do not collect anything afterwards.
+     1. collect / collectLatest()
+     2. first/firstornull()
+     3. toList()/toSet() - returns a list 
+     4. single/singleOrNull() - returns only a single element from that flow.
+     5. last/lastOrNull() 
+     6. launchIn() - 
