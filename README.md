@@ -162,4 +162,27 @@ viewmodel scope cancels all its coroutines when the veiw Model is cleared.  | it
      3. toList()/toSet() - returns a list 
      4. single/singleOrNull() - returns only a single element from that flow.
      5. last/lastOrNull() 
-     6. launchIn() - 
+     6. launchIn() -
+## map() operator : 
+ - It Allows you to transform each value emmited by flow into another value.
+ - Think it as the equalent of map function in lists, but for asynchronous streams.
+ - ## uses :
+     - Use it for applying transformations to incoming data, such as formatting, converting types, or computing derived values.
+     - converts every emission from the original type to other one.
+     - only executes when flow is collected and can be chained with other operators.
+     - the order of elements in the flow remains unchanged, making it predictable for sequential transformations.
+## filter() operator : 
+ - The Filter Operator allows you to only filter the values that sastify a condition to pass downstream.
+ - ## uses :
+     - Used for filtering user input, network responses, or sensor events before further processing.
+     - Downstream operators or collectors won't receive irrelevant data.
+     - Often paired with map or take to create consise, declarative pipelines.
+## take() operator : 
+- allows you to first n values from the flow.
+- ## uses :
+    - useful for timeout scenarios, limiting UI updates, or taking only few events from a large stream.
+    - Only collects the first N elements, then cancels the upstream flow automatically.
+    - Ideal for stopping long-running or infinate flows once enough data is collected.
+## distintUntilChanged() opeator : 
+- This operator ensures that consecutive duplicate values are ignored, emitting only when a new value differs from the prevoius one.
+- #### note : it will not remove those duplicate values from the flow.
