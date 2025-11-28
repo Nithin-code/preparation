@@ -186,3 +186,16 @@ viewmodel scope cancels all its coroutines when the veiw Model is cleared.  | it
 ## distintUntilChanged() opeator : 
 - This operator ensures that consecutive duplicate values are ignored, emitting only when a new value differs from the prevoius one.
 - #### note : it will not remove those duplicate values from the flow.
+# Exception handling in flows: 
+ - ## catch operator :
+    - catches exceptions upstream of where catch is applied.
+    - can emit fallback values to continue the flow after an error.
+    - only catches exceptions in the flow builder or operatores above it.(not inside collect)
+    - Example :
+    - <img width="460" height="192" alt="{D1BCF09F-C55A-4766-8EE4-B1A3320AE57C}" src="https://github.com/user-attachments/assets/f5c8b323-84d0-4e6a-b5c8-72e1b7375dee" />
+    - <img width="306" height="97" alt="{CAEBE947-C147-412D-B81A-983C17BEA683}" src="https://github.com/user-attachments/assets/d8ffd3cb-4a48-447d-bc14-b49fe5e71011" />
+    - output is :
+    - <img width="486" height="68" alt="{51D9BE52-06DF-48F8-BF00-C289F99905FD}" src="https://github.com/user-attachments/assets/2b393d6e-405d-4d57-97cb-5c07bf9ae79c" />
+
+
+      
